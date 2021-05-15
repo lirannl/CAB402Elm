@@ -4,21 +4,18 @@ const form = document.getElementById("form");
 const message = document.getElementById("message");
 const title = document.getElementById("title");
 
-const defaultMsg = message.value;
-
 // Given a response JSON, make a user object with retrievable attributes
 const constructUser = (obj) => {
     if (obj.id && obj.name && obj.email)
     return {
-        getName: () => obj.name,
-        getEmail: () => obj.email,
-        getID: () => obj.id
+        name: obj.name, email: obj.email, id: obj.id
     }
 }
 
 async function submitHandler(event) {
     event.preventDefault();
     const path = form[0].value;
+    console.log(path);
     // Hide the form
     form.classList.add("invisible");
     message.innerText = `Loading "${path}"...`;
@@ -27,9 +24,9 @@ async function submitHandler(event) {
     // Clear the text field
     if (res) form[0].value = "";
     // Set the title
-    title.innerText = user.getName();
+    title.innerText = user.name;
     // Show the user's details
-    message.innerText = `Email: ${user.getEmail()}\nName: ${user.getName()}\nID: ${user.getID()}`;
+    message.innerText = `Email: ${user.email}\nName: ${user.name}\nID: ${user.id}`;
     // Show the form
     form.classList.remove("invisible");
 }
