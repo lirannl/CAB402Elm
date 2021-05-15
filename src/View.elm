@@ -4,7 +4,7 @@ import Html exposing (Html, button, text, textarea, div, br, pre)
 import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (value)
 import Common exposing (Msg(..), NoUserCause(..), Model(..))
-import Html.Attributes exposing (target)
+import Html.Attributes exposing (target, autofocus, autocomplete)
 
 fetchNewUserButton : String -> Html Msg
 fetchNewUserButton path = 
@@ -18,7 +18,9 @@ handleInput original target = case String.uncons (String.reverse target) of
   _ -> UpdateText target
 inputField : String -> Html Msg
 inputField path =
-  textarea [onInput (handleInput path), value path] []
+  textarea [onInput (handleInput path), value path
+  , autofocus True
+  , autocomplete False] []
 
 inputArea : String -> Html Msg
 inputArea path =
@@ -42,7 +44,7 @@ view model =
     Loading path -> {
       title = "Loading",
       body = [
-        text ("Loading user #" ++ path ++ "...")
+        text ("Loading \"" ++ path ++ "\"...")
       ]}
     Success {user, path} -> {
       title = user.name,
